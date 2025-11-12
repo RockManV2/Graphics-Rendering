@@ -25,6 +25,10 @@ set(IMGUI_SOURCES
         core/LeyLines/Component.h
         core/LeyLines/Transform.cpp
         core/LeyLines/Transform.h
+        core/LeyLines/SpriteRenderer.cpp
+        core/LeyLines/SpriteRenderer.h
+        core/LeyLines/Shader.cpp
+        core/LeyLines/Shader.h
 )
 
 add_executable(RawEngine main.cpp
