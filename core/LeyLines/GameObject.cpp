@@ -1,17 +1,17 @@
 
+#include <vector>
+
 #include "GameObject.h"
-
-
-#include "Scene.h"
 
 GameObject::GameObject(std::string pName) {
     name = pName;
+    transform = AddComponent<Transform>();
 }
 
-void GameObject::AddComponent(Component *newComponent) {
-    components.insert(components.end(), newComponent);
+GameObject::~GameObject() {
+    for (Component* c : components)
+        delete c;
 }
-
 
 void GameObject::Awake() {
     for (auto & component : components) {

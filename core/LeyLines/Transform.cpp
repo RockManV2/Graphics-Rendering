@@ -1,8 +1,8 @@
 
 #include "Transform.h"
 
-#include <iostream>
+#include <cstdio>
 
 void Transform::Start() {
-    std::cout << "Component has started";
+    printf("Transform Started\n");
 }

@@ -6,7 +6,7 @@
 
 #include "Component.h"
 
-class Transform : Component {
+class Transform : public Component {
 public:
     glm::vec2 Position;
     glm::vec2 Origin;

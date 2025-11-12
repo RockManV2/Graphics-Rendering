@@ -5,8 +5,13 @@ Scene::Scene(std::string pName) {
     name = pName;
 }
 
+Scene::~Scene() {
+    for (GameObject* go : gameObjects)
+        delete go;
+}
+
 void Scene::Add(GameObject* newObject) {
-    gameObjects.insert(gameObjects.end(), newObject);
+    gameObjects.push_back(newObject);
 }
 
 void Scene::Remove(GameObject* object) {

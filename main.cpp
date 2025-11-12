@@ -8,7 +8,6 @@
 #include <format>
 
 #include "core/LeyLines/Scene.h"
-#include "core/LeyLines/Transform.h"
 #include "core/RawEngine/assimpLoader.h"
 #include "core/RawEngine/model.h"
 #include "core/RawEngine/texture.h"
@@ -180,7 +179,6 @@ int main() {
     for (int i = 0; i < 3; i++) {
         GameObject* newObject = new GameObject(std::format("GameObject{}", i));
         activeScene->Add(newObject);
-        newObject->AddComponent((Component*)new Transform());
     }
 
     activeScene->Awake();
