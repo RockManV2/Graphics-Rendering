@@ -3,13 +3,16 @@
 #define RAWENGINE_COMPONENT_H
 
 
+class Transform;
 class GameObject;
 
 class Component {
 
 public:
     GameObject* gameObject;
-    // Transform transform
+    Transform* transform;
+
+    void SetOwner(GameObject* gameObject);
 
     virtual void Awake();
     virtual void Start();

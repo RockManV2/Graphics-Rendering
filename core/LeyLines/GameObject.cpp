@@ -6,6 +6,7 @@
 GameObject::GameObject(std::string pName) {
     name = pName;
     transform = AddComponent<Transform>();
+    transform->transform = transform;
 }
 
 GameObject::~GameObject() {

@@ -8,10 +8,10 @@
 
 class Transform : public Component {
 public:
-    glm::vec2 Position;
-    glm::vec2 Origin;
-    glm::vec2 Scale;
-    glm::vec2 Rotation;
+    glm::vec3 Position;
+    glm::vec3 Origin;
+    glm::vec3 Scale;
+    glm::vec3 Rotation;
 
     void Start() override;
 };

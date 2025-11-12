@@ -24,6 +24,10 @@ public:
     template <typename T, typename... Args>
     T* AddComponent(Args&&... args) {
         T* newComponent = new T(std::forward<Args>(args)...);
+
+        newComponent->SetOwner(this);
+        newComponent->transform = GetComponent<Transform>();
+
         components.push_back(newComponent);
         return newComponent;
     }
