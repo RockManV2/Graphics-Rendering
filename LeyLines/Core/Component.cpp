@@ -1,7 +1,4 @@
 
-#include "Component.h"
-
-#include "Camera.h"
 #include "Transform.h"
 
 void Component::SetOwner(GameObject* owner) {

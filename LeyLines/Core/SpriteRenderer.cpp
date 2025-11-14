@@ -6,7 +6,7 @@
 #include <glm/ext/matrix_transform.hpp>
 
 #include "Transform.h"
-#include "../RawEngine/model.h"
+#include "../../RawEngine/model.h"
 
 void SpriteRenderer::Awake() {
 

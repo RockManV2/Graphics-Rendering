@@ -7,8 +7,8 @@
 
 #include <glm/vec4.hpp>
 #include "Component.h"
-#include "../LeyLines/Shader.h"
-#include "../RawEngine/texture.h"
+#include "Shader.h"
+#include "../../RawEngine/texture.h"
 
 
 class SpriteRenderer : public Component {

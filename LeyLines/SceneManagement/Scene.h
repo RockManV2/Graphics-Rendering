@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "GameObject.h"
+#include "../Core/GameObject.h"
 
 class Scene {
 public:

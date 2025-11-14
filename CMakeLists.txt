@@ -15,31 +15,31 @@ set(IMGUI_SOURCES
         imgui/imgui_widgets.cpp
         imgui/backends/imgui_impl_glfw.cpp
         imgui/backends/imgui_impl_opengl3.cpp
-        core/RawEngine/texture.cpp
-        core/RawEngine/texture.h
-        core/LeyLines/GameObject.cpp
-        core/LeyLines/GameObject.h
-        core/LeyLines/Scene.cpp
-        core/LeyLines/Scene.h
-        core/LeyLines/Component.cpp
-        core/LeyLines/Component.h
-        core/LeyLines/Transform.cpp
-        core/LeyLines/Transform.h
-        core/LeyLines/SpriteRenderer.cpp
-        core/LeyLines/SpriteRenderer.h
-        core/LeyLines/Shader.cpp
-        core/LeyLines/Shader.h
+        RawEngine/texture.cpp
+        RawEngine/texture.h
+        LeyLines/Core/GameObject.cpp
+        LeyLines/Core/GameObject.h
+        LeyLines/SceneManagement/Scene.cpp
+        LeyLines/SceneManagement/Scene.h
+        LeyLines/Core/Component.cpp
+        LeyLines/Core/Component.h
+        LeyLines/Core/Transform.cpp
+        LeyLines/Core/Transform.h
+        LeyLines/Core/SpriteRenderer.cpp
+        LeyLines/Core/SpriteRenderer.h
+        LeyLines/Core/Shader.cpp
+        LeyLines/Core/Shader.h
 )
 
 add_executable(RawEngine main.cpp
         ${IMGUI_SOURCES}
-        core/RawEngine/assimpLoader.cpp
-        core/RawEngine/assimpLoader.h
-        core/RawEngine/mesh.cpp
-        core/RawEngine/mesh.h
-        core/RawEngine/vertex.h
-        core/RawEngine/model.cpp
-        core/RawEngine/model.h
+        RawEngine/assimpLoader.cpp
+        RawEngine/assimpLoader.h
+        RawEngine/mesh.cpp
+        RawEngine/mesh.h
+        RawEngine/vertex.h
+        RawEngine/model.cpp
+        RawEngine/model.h
 )
 
 add_custom_command(

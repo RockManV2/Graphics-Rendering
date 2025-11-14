@@ -4,13 +4,12 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <sstream>
-#include <algorithm>
 #include <format>
 
-#include "core/LeyLines/Scene.h"
-#include "core/RawEngine/assimpLoader.h"
-#include "core/RawEngine/model.h"
-#include "core/RawEngine/texture.h"
+#include "../LeyLines/SceneManagement/Scene.h"
+#include "../RawEngine/assimpLoader.h"
+#include "../RawEngine/model.h"
+#include "../RawEngine/texture.h"
 
 //#define MAC_CLION
 #define VSTUDIO
