@@ -17,7 +17,10 @@ Camera* Camera::GetActive() {
 }
 
 glm::mat4 Camera::GetViewMatrix() {
-    return glm::lookAt(transform->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 cameraMatrix = glm::mat4(1.0f);
+    cameraMatrix = glm::translate(cameraMatrix, transform->Position);
+    return glm::inverse(cameraMatrix);
+
 }
 
 glm::mat4 Camera::GetProjectionMatrix() {

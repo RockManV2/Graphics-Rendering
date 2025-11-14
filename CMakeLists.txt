@@ -25,14 +25,14 @@ set(IMGUI_SOURCES
         LeyLines/Core/Component.h
         LeyLines/Core/Transform.cpp
         LeyLines/Core/Transform.h
-        LeyLines/Core/SpriteRenderer.cpp
-        LeyLines/Core/SpriteRenderer.h
         LeyLines/Core/Shader.cpp
         LeyLines/Core/Shader.h
         LeyLines/Core/Camera.h
         LeyLines/Core/Camera.cpp
         LeyLines/SceneManagement/SceneManager.cpp
         LeyLines/SceneManagement/SceneManager.h
+        LeyLines/Game/Movement.cpp
+        LeyLines/Game/Movement.h
 )
 
 add_executable(RawEngine main.cpp

@@ -11,6 +11,7 @@
 #include "../RawEngine/model.h"
 #include "../RawEngine/texture.h"
 #include "LeyLines/Core/Camera.h"
+#include "LeyLines/Game/Movement.h"
 #include "LeyLines/SceneManagement/SceneManager.h"
 
 //#define MAC_CLION
@@ -30,9 +31,12 @@
 #include <imgui_impl_opengl3.h>
 #endif
 
-#include "LeyLines/SceneManagement/SceneManager.h"
-#include "LeyLines/Core/Camera.h"
 
+/* TODO:
+ * 1: Make input class
+ * 2: Refactor MeshRenderer to own class.
+ * 3:
+ */
 
 int g_width = 800;
 int g_height = 600;
@@ -88,6 +92,7 @@ int main() {
 #endif
 
     GLFWwindow *window = glfwCreateWindow(g_width, g_height, "LearnOpenGL", NULL, NULL);
+    Movement::SetActiveWindow(window);
     if (window == NULL) {
         printf("Failed to create GLFW window\n");
         glfwTerminate();
@@ -180,6 +185,7 @@ int main() {
 
     GameObject* newObject = new GameObject("Camera");
     newObject->AddComponent<Camera>();
+    newObject->AddComponent<Movement>();
     scene1->Add(newObject);
 
     SceneManager::AddScene(scene1);

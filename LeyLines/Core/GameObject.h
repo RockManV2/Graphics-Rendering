@@ -10,7 +10,7 @@
 
 class GameObject{
 private:
-    std::vector<Component*> components;
+    std::vector<Component*> components; // ownership
 
 public:
     std::string name;
@@ -18,10 +18,11 @@ public:
 
     GameObject(std::string name);
     ~GameObject();
+    // TODO: add the missing things :-)
 
     GameObject Find(std::string);
     GameObject Instantiate();
-    std::vector<GameObject> FindObjectsWithTag(std::string);
+    std::vector<GameObject> FindObjectsWithTag(std::string); // copy???
 
     template <typename T, typename... Args>
     T* AddComponent(Args&&... args) {
