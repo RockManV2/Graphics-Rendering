@@ -4,9 +4,22 @@
 
 #ifndef RAWENGINE_CAMERA_H
 #define RAWENGINE_CAMERA_H
+#include <glm/fwd.hpp>
+
+#include "Component.h"
 
 
-class Camera {
+class Camera : public Component {
+public:
+    static Camera* GetActive();
+
+    glm::mat4 GetViewMatrix();
+    glm::mat4 GetProjectionMatrix();
+
+    void Awake() override;
+
+private:
+    static Camera* activeCam;
 };
 
 

@@ -29,4 +29,5 @@ void SceneManager::InitializeScene() {
 
 void SceneManager::UpdateScene() {
     activeScene->Update();
+    activeScene->Render();
 }

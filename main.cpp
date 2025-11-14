@@ -10,6 +10,7 @@
 #include "../RawEngine/assimpLoader.h"
 #include "../RawEngine/model.h"
 #include "../RawEngine/texture.h"
+#include "LeyLines/Core/Camera.h"
 #include "LeyLines/SceneManagement/SceneManager.h"
 
 //#define MAC_CLION
@@ -30,6 +31,7 @@
 #endif
 
 #include "LeyLines/SceneManagement/SceneManager.h"
+#include "LeyLines/Core/Camera.h"
 
 
 int g_width = 800;
@@ -157,16 +159,6 @@ int main() {
     glClearColor(clearColor.r,
                  clearColor.g, clearColor.b, clearColor.a);
 
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
-    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
-    //VP
-    glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(g_width) / static_cast<float>(g_height), 0.1f, 100.0f);
 
     GLint mvpMatrixUniform = glGetUniformLocation(modelShaderProgram, "mvpMatrix");
     GLint textureModelUniform = glGetUniformLocation(textureShaderProgram, "mvpMatrix");
@@ -185,6 +177,10 @@ int main() {
         GameObject* newObject = new GameObject(std::format("GameObject{}", i));
         scene1->Add(newObject);
     }
+
+    GameObject* newObject = new GameObject("Camera");
+    newObject->AddComponent<Camera>();
+    scene1->Add(newObject);
 
     SceneManager::AddScene(scene1);
     SceneManager::LoadScene("Scene1");
@@ -205,7 +201,7 @@ int main() {
         suzanne.rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
 
         glUseProgram(textureShaderProgram);
-        glUniformMatrix4fv(textureModelUniform, 1, GL_FALSE, glm::value_ptr(projection * view * quadModel.getModelMatrix()));
+        glUniformMatrix4fv(textureModelUniform, 1, GL_FALSE, glm::value_ptr(Camera::GetActive()->GetProjectionMatrix() * Camera::GetActive()->GetViewMatrix() * quadModel.getModelMatrix()));
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(textureUniform, 0);
         glBindTexture(GL_TEXTURE_2D, cmgtGatoTexture.getId());
@@ -214,7 +210,7 @@ int main() {
         glActiveTexture(GL_TEXTURE0);
 
         glUseProgram(modelShaderProgram);
-        glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(projection * view * suzanne.getModelMatrix()));
+        glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(Camera::GetActive()->GetProjectionMatrix() * Camera::GetActive()->GetViewMatrix() * suzanne.getModelMatrix()));
         suzanne.render();
         glBindVertexArray(0);
 

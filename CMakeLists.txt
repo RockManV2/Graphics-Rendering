@@ -29,6 +29,8 @@ set(IMGUI_SOURCES
         LeyLines/Core/SpriteRenderer.h
         LeyLines/Core/Shader.cpp
         LeyLines/Core/Shader.h
+        LeyLines/Core/Camera.h
+        LeyLines/Core/Camera.cpp
         LeyLines/SceneManagement/SceneManager.cpp
         LeyLines/SceneManagement/SceneManager.h
 )

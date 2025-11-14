@@ -9,11 +9,13 @@
 #include "Transform.h"
 
 class GameObject{
-    std::string name;
-    std::vector<Component*> components; // doesn't work! (slicing) - must be pointers - but then who manages lifetime?
-    Transform* transform;
+private:
+    std::vector<Component*> components;
 
 public:
+    std::string name;
+    Transform* transform;
+
     GameObject(std::string name);
     ~GameObject();
 
