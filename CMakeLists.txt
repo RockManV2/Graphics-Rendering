@@ -29,6 +29,8 @@ set(IMGUI_SOURCES
         LeyLines/Core/SpriteRenderer.h
         LeyLines/Core/Shader.cpp
         LeyLines/Core/Shader.h
+        LeyLines/SceneManagement/SceneManager.cpp
+        LeyLines/SceneManagement/SceneManager.h
 )
 
 add_executable(RawEngine main.cpp

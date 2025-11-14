@@ -10,6 +10,7 @@
 #include "../RawEngine/assimpLoader.h"
 #include "../RawEngine/model.h"
 #include "../RawEngine/texture.h"
+#include "LeyLines/SceneManagement/SceneManager.h"
 
 //#define MAC_CLION
 #define VSTUDIO
@@ -27,6 +28,9 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #endif
+
+#include "LeyLines/SceneManagement/SceneManager.h"
+
 
 int g_width = 800;
 int g_height = 600;
@@ -173,16 +177,19 @@ int main() {
     float deltaTime = 0.0f;
     float rotationStrength = 100.0f;
 
-    Scene* activeScene = new Scene("Scene1");
+    // Scene stuff
+
+    Scene* scene1 = new Scene("Scene1");
 
     for (int i = 0; i < 3; i++) {
         GameObject* newObject = new GameObject(std::format("GameObject{}", i));
-        activeScene->Add(newObject);
+        scene1->Add(newObject);
     }
 
-    activeScene->Awake();
-    activeScene->Start();
-    activeScene->OnEnable();
+    SceneManager::AddScene(scene1);
+    SceneManager::LoadScene("Scene1");
+
+    SceneManager::InitializeScene();
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -219,8 +226,7 @@ int main() {
         finishFrameTime = glfwGetTime();
         deltaTime = static_cast<float>(finishFrameTime - currentTime);
         currentTime = finishFrameTime;
-        activeScene->Update();
-        activeScene->Render();
+        SceneManager::UpdateScene();
     }
 
     glDeleteProgram(modelShaderProgram);
