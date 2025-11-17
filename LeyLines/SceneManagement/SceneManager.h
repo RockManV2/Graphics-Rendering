@@ -18,6 +18,7 @@ public:
     static Scene* GetActiveScene();
     static void InitializeScene();
     static void UpdateScene();
+    static void RenderScene();
     static void AddScene(Scene* newScene);
 
 private:

@@ -11,6 +11,7 @@
 #include "../RawEngine/model.h"
 #include "../RawEngine/texture.h"
 #include "LeyLines/Core/Camera.h"
+#include "LeyLines/Core/MeshRenderer.h"
 #include "LeyLines/Game/Movement.h"
 #include "LeyLines/SceneManagement/SceneManager.h"
 
@@ -41,13 +42,7 @@
 int g_width = 800;
 int g_height = 600;
 
-void processInput(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
-void framebufferSizeCallback(GLFWwindow *window,
-                             int width, int height) {
+void framebufferSizeCallback(GLFWwindow *window, int width, int height) {
     g_width = width;
     g_height = height;
     glViewport(0, 0, width, height);
@@ -165,70 +160,55 @@ int main() {
                  clearColor.g, clearColor.b, clearColor.a);
 
 
-    GLint mvpMatrixUniform = glGetUniformLocation(modelShaderProgram, "mvpMatrix");
-    GLint textureModelUniform = glGetUniformLocation(textureShaderProgram, "mvpMatrix");
-    GLint textureUniform = glGetUniformLocation(textureShaderProgram, "text");
-
     double currentTime = glfwGetTime();
     double finishFrameTime = 0.0;
     float deltaTime = 0.0f;
     float rotationStrength = 100.0f;
 
     // Scene stuff
+    {
+        Scene* scene1 = new Scene("Scene1");
 
-    Scene* scene1 = new Scene("Scene1");
+        GameObject* monkeyObj = new GameObject("Suzanne");
+        auto* monkeyRenderer = monkeyObj->AddComponent<MeshRenderer>();
+        monkeyRenderer->model = &suzanne;
+        monkeyRenderer->shaderId = modelShaderProgram;
+        scene1->Add(monkeyObj);
 
-    for (int i = 0; i < 3; i++) {
-        GameObject* newObject = new GameObject(std::format("GameObject{}", i));
+        GameObject* quadObj = new GameObject("Quad");
+        auto* quadRenderer = quadObj->AddComponent<MeshRenderer>();
+
+        quadRenderer->model = &quadModel;
+        quadRenderer->shaderId = textureShaderProgram;
+        quadRenderer->textureId = cmgtGatoTexture.getId();
+
+        scene1->Add(quadObj);
+
+        GameObject* newObject = new GameObject("Camera");
+        newObject->AddComponent<Camera>();
+        newObject->AddComponent<Movement>();
         scene1->Add(newObject);
+
+        SceneManager::AddScene(scene1);
+        SceneManager::LoadScene("Scene1");
     }
 
-    GameObject* newObject = new GameObject("Camera");
-    newObject->AddComponent<Camera>();
-    newObject->AddComponent<Movement>();
-    scene1->Add(newObject);
-
-    SceneManager::AddScene(scene1);
-    SceneManager::LoadScene("Scene1");
 
     SceneManager::InitializeScene();
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Begin("Raw Engine v2");
-        ImGui::Text("Hello :)");
-        ImGui::End();
-
-        processInput(window);
         suzanne.rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
 
-        glUseProgram(textureShaderProgram);
-        glUniformMatrix4fv(textureModelUniform, 1, GL_FALSE, glm::value_ptr(Camera::GetActive()->GetProjectionMatrix() * Camera::GetActive()->GetViewMatrix() * quadModel.getModelMatrix()));
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(textureUniform, 0);
-        glBindTexture(GL_TEXTURE_2D, cmgtGatoTexture.getId());
-        quadModel.render();
-        glBindVertexArray(0);
-        glActiveTexture(GL_TEXTURE0);
-
-        glUseProgram(modelShaderProgram);
-        glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(Camera::GetActive()->GetProjectionMatrix() * Camera::GetActive()->GetViewMatrix() * suzanne.getModelMatrix()));
-        suzanne.render();
-        glBindVertexArray(0);
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        SceneManager::UpdateScene();
+        SceneManager::RenderScene();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
         finishFrameTime = glfwGetTime();
         deltaTime = static_cast<float>(finishFrameTime - currentTime);
         currentTime = finishFrameTime;
-        SceneManager::UpdateScene();
     }
 
     glDeleteProgram(modelShaderProgram);

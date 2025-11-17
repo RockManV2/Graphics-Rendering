@@ -33,6 +33,9 @@ set(IMGUI_SOURCES
         LeyLines/SceneManagement/SceneManager.h
         LeyLines/Game/Movement.cpp
         LeyLines/Game/Movement.h
+        LeyLines/Core/IRenderable.h
+        LeyLines/Core/MeshRenderer.cpp
+        LeyLines/Core/MeshRenderer.h
 )
 
 add_executable(RawEngine main.cpp

@@ -31,3 +31,7 @@ void SceneManager::UpdateScene() {
     activeScene->Update();
     activeScene->Render();
 }
+
+void SceneManager::RenderScene() {
+    activeScene->Render();
+}

@@ -10,14 +10,14 @@
 
 class GameObject{
 private:
-    std::vector<Component*> components; // ownership
+    std::vector<Component*> components;
 
 public:
     std::string name;
     Transform* transform;
 
     GameObject(std::string name);
-    ~GameObject();
+    virtual ~GameObject();
     // TODO: add the missing things :-)
 
     GameObject Find(std::string);
@@ -52,7 +52,6 @@ public:
     virtual void OnEnable();
     virtual void OnDisable();
     virtual void Update();
-    virtual void Render();
 };
 
 

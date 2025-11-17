@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "../Core/GameObject.h"
+#include "../Core/IRenderable.h"
 
 class Scene {
 public:
@@ -13,7 +14,6 @@ public:
 
     std::string name;
     int Id;
-    std::vector<GameObject*> gameObjects;
 
     void Add(GameObject*);
     void Remove(GameObject*);
@@ -25,7 +25,12 @@ public:
     void OnDisable();
     void Update();
     void Render();
+    void RegisterRenderable(IRenderable*);
     void CheckCollisions();
+
+private:
+    std::vector<GameObject*> gameObjects;
+    std::vector<IRenderable*> renderables;
 };
 
 

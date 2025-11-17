@@ -53,7 +53,12 @@ void Scene::Update() {
 }
 
 void Scene::Render() {
-    for (auto & gameObject : gameObjects) {
-        gameObject->Render();
+    for (auto & renderable : renderables) {
+        renderable->Render();
     }
 }
+
+void Scene::RegisterRenderable(IRenderable* renderable) {
+    renderables.push_back(renderable);
+}
+

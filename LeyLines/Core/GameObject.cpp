@@ -43,9 +43,3 @@ void GameObject::Update() {
         component->Update();
     }
 }
-
-void GameObject::Render() {
-    for (auto & component : components) {
-        component->Render();
-    }
-}
