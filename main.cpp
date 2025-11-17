@@ -13,41 +13,13 @@
 #include "LeyLines/Core/Camera.h"
 #include "LeyLines/Core/Input.h"
 #include "LeyLines/Core/MeshRenderer.h"
+#include "LeyLines/Core/Window.h"
 #include "LeyLines/Game/Movement.h"
 #include "LeyLines/SceneManagement/SceneManager.h"
-
-//#define MAC_CLION
-#define VSTUDIO
-
-#ifdef MAC_CLION
-#include "imgui.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
-#endif
-
-#ifdef VSTUDIO
-// Note: install imgui with:
-//     ./vcpkg.exe install imgui[glfw-binding,opengl3-binding]
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-#endif
-
-
-/* TODO:
- * 1: Make input class
- * 2: Refactor MeshRenderer to own class.
- * 3:
- */
 
 int g_width = 800;
 int g_height = 600;
 
-void framebufferSizeCallback(GLFWwindow *window, int width, int height) {
-    g_width = width;
-    g_height = height;
-    glViewport(0, 0, width, height);
-}
 
 std::string readFileToString(const std::string &filePath) {
     std::ifstream fileStream(filePath, std::ios::in);
@@ -78,48 +50,8 @@ GLuint generateShader(const std::string &shaderPath, GLuint shaderType) {
 }
 
 int main() {
-    glfwInit();
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-    GLFWwindow *window = glfwCreateWindow(g_width, g_height, "LearnOpenGL", NULL, NULL);
-
-    Input::SetWindow(window);
-
-    if (window == NULL) {
-        printf("Failed to create GLFW window\n");
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
-
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        printf("Failed to initialize GLAD\n");
-        return -1;
-    }
-
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-    //Setup platforms
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 400");
-
-    glEnable(GL_DEPTH_TEST);
-    glFrontFace(GL_CCW);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    Window window(800,600, "LeyLines");
+    Input::SetWindow(window.window);
 
     const GLuint modelVertexShader = generateShader("shaders/modelVertex.vs", GL_VERTEX_SHADER);
     const GLuint fragmentShader = generateShader("shaders/fragment.fs", GL_FRAGMENT_SHADER);
@@ -150,6 +82,12 @@ int main() {
     glDeleteShader(fragmentShader);
     glDeleteShader(textureShader);
 
+
+    glm::vec4 clearColor = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+    glClearColor(clearColor.r,
+                 clearColor.g, clearColor.b, clearColor.a);
+
+
     core::Mesh quad = core::Mesh::generateQuad();
     core::Model quadModel({quad});
     quadModel.translate(glm::vec3(0,0,-2.5));
@@ -157,17 +95,6 @@ int main() {
 
     core::Model suzanne = core::AssimpLoader::loadModel("models/nonormalmonkey.obj");
     core::Texture cmgtGatoTexture("textures/CMGaTo_crop.png");
-
-    glm::vec4 clearColor = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-    glClearColor(clearColor.r,
-                 clearColor.g, clearColor.b, clearColor.a);
-
-
-    double currentTime = glfwGetTime();
-    double finishFrameTime = 0.0;
-    float deltaTime = 0.0f;
-    float rotationStrength = 100.0f;
-
     // Scene stuff
     {
         Scene* scene1 = new Scene("Scene1");
@@ -196,10 +123,14 @@ int main() {
         SceneManager::LoadScene("Scene1");
     }
 
-
     SceneManager::InitializeScene();
 
-    while (!glfwWindowShouldClose(window)) {
+    double currentTime = glfwGetTime();
+    double finishFrameTime = 0.0;
+    float deltaTime = 0.0f;
+    float rotationStrength = 100.0f;
+
+    while (!glfwWindowShouldClose(window.window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         suzanne.rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
@@ -207,7 +138,7 @@ int main() {
         SceneManager::UpdateScene();
         SceneManager::RenderScene();
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window.window);
         glfwPollEvents();
         finishFrameTime = glfwGetTime();
         deltaTime = static_cast<float>(finishFrameTime - currentTime);
@@ -215,9 +146,6 @@ int main() {
     }
 
     glDeleteProgram(modelShaderProgram);
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
 
     glfwTerminate();
     return 0;
