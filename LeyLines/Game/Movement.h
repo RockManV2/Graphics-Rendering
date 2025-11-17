@@ -8,11 +8,7 @@
 class Movement : public Component {
 
 public:
-    static void SetActiveWindow(GLFWwindow* window);
     void Update() override;
-
-private:
-    static GLFWwindow* activeWindow;
 };
 
 

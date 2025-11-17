@@ -36,6 +36,8 @@ set(IMGUI_SOURCES
         LeyLines/Core/IRenderable.h
         LeyLines/Core/MeshRenderer.cpp
         LeyLines/Core/MeshRenderer.h
+        LeyLines/Core/Input.cpp
+        LeyLines/Core/Input.h
 )
 
 add_executable(RawEngine main.cpp

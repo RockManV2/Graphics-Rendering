@@ -11,6 +11,7 @@
 #include "../RawEngine/model.h"
 #include "../RawEngine/texture.h"
 #include "LeyLines/Core/Camera.h"
+#include "LeyLines/Core/Input.h"
 #include "LeyLines/Core/MeshRenderer.h"
 #include "LeyLines/Game/Movement.h"
 #include "LeyLines/SceneManagement/SceneManager.h"
@@ -87,7 +88,9 @@ int main() {
 #endif
 
     GLFWwindow *window = glfwCreateWindow(g_width, g_height, "LearnOpenGL", NULL, NULL);
-    Movement::SetActiveWindow(window);
+
+    Input::SetWindow(window);
+
     if (window == NULL) {
         printf("Failed to create GLFW window\n");
         glfwTerminate();

@@ -5,25 +5,21 @@
 
 #include "../Core/Camera.h"
 #include "../Core/Transform.h"
+#include "../Core/Input.h"
 
-GLFWwindow* Movement::activeWindow = nullptr;
-
-void Movement::SetActiveWindow(GLFWwindow* window) {
-    activeWindow = window;
-}
 
 void Movement::Update() {
 
-    if (glfwGetKey(activeWindow, GLFW_KEY_W) == GLFW_PRESS) {
+    if (Input::GetKeyDown(GLFW_KEY_W)) {
         Camera::GetActive()->transform->Position.z -= 0.1f;
     }
-    if (glfwGetKey(activeWindow, GLFW_KEY_S) == GLFW_PRESS) {
+    if (Input::GetKeyDown(GLFW_KEY_S)) {
         Camera::GetActive()->transform->Position.z += 0.1f;
     }
-    if (glfwGetKey(activeWindow, GLFW_KEY_A) == GLFW_PRESS) {
+    if (Input::GetKeyDown(GLFW_KEY_A)) {
         Camera::GetActive()->transform->Position.x -= 0.1f;
     }
-    if (glfwGetKey(activeWindow, GLFW_KEY_D) == GLFW_PRESS) {
+    if (Input::GetKeyDown(GLFW_KEY_D)) {
         Camera::GetActive()->transform->Position.x += 0.1f;
     }
 
