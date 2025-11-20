@@ -24,7 +24,7 @@ void MeshRenderer::Render() {
     glm::mat4 mvp =
         Camera::GetActive()->GetProjectionMatrix() *
         Camera::GetActive()->GetViewMatrix() *
-        model->getModelMatrix();
+        transform->GetModelMatrix();
 
     if (mvpLocation >= 0)
         glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));

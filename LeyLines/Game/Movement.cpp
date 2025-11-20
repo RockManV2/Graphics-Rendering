@@ -11,16 +11,16 @@
 void Movement::Update() {
 
     if (Input::GetKeyDown(GLFW_KEY_W)) {
-        Camera::GetActive()->transform->Position.z -= 0.1f;
+        Camera::GetActive()->transform->Translate(glm::vec3(0.0f, 0.0f, -0.1f));
     }
     if (Input::GetKeyDown(GLFW_KEY_S)) {
-        Camera::GetActive()->transform->Position.z += 0.1f;
+        Camera::GetActive()->transform->Translate(glm::vec3(0.0f, 0.0f, 0.1f));
     }
     if (Input::GetKeyDown(GLFW_KEY_A)) {
-        Camera::GetActive()->transform->Position.x -= 0.1f;
+        Camera::GetActive()->transform->Translate(glm::vec3(-0.1f, 0.0f, 0.0f));
     }
     if (Input::GetKeyDown(GLFW_KEY_D)) {
-        Camera::GetActive()->transform->Position.x += 0.1f;
+        Camera::GetActive()->transform->Translate(glm::vec3(0.1f, 0.0f, 0.0f));
     }
 
 }

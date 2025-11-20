@@ -90,38 +90,40 @@ int main() {
 
     core::Mesh quad = core::Mesh::generateQuad();
     core::Model quadModel({quad});
-    quadModel.translate(glm::vec3(0,0,-2.5));
-    quadModel.scale(glm::vec3(5, 5, 1));
 
     core::Model suzanne = core::AssimpLoader::loadModel("models/nonormalmonkey.obj");
     core::Texture cmgtGatoTexture("textures/CMGaTo_crop.png");
     // Scene stuff
-    {
-        Scene* scene1 = new Scene("Scene1");
 
-        GameObject* monkeyObj = new GameObject("Suzanne");
-        auto* monkeyRenderer = monkeyObj->AddComponent<MeshRenderer>();
-        monkeyRenderer->model = &suzanne;
-        monkeyRenderer->shaderId = modelShaderProgram;
-        scene1->Add(monkeyObj);
+    Scene* scene1 = new Scene("Scene1");
 
-        GameObject* quadObj = new GameObject("Quad");
-        auto* quadRenderer = quadObj->AddComponent<MeshRenderer>();
+    GameObject* monkeyObj = new GameObject("Suzanne");
+    auto* monkeyRenderer = monkeyObj->AddComponent<MeshRenderer>();
+    monkeyRenderer->model = &suzanne;
+    monkeyRenderer->shaderId = modelShaderProgram;
+    scene1->Add(monkeyObj);
 
-        quadRenderer->model = &quadModel;
-        quadRenderer->shaderId = textureShaderProgram;
-        quadRenderer->textureId = cmgtGatoTexture.getId();
+    GameObject* quadObj = new GameObject("Quad");
+    auto* quadRenderer = quadObj->AddComponent<MeshRenderer>();
 
-        scene1->Add(quadObj);
+    quadRenderer->model = &quadModel;
+    quadRenderer->shaderId = textureShaderProgram;
+    quadRenderer->textureId = cmgtGatoTexture.getId();
 
-        GameObject* newObject = new GameObject("Camera");
-        newObject->AddComponent<Camera>();
-        newObject->AddComponent<Movement>();
-        scene1->Add(newObject);
+    quadObj->GetComponent<Transform>()->Translate(glm::vec3(0,0,-2.5));
+    quadObj->GetComponent<Transform>()->Scale(glm::vec3(5, 5, 1));
 
-        SceneManager::AddScene(scene1);
-        SceneManager::LoadScene("Scene1");
-    }
+    scene1->Add(quadObj);
+
+    GameObject* newObject = new GameObject("Camera");
+    newObject->AddComponent<Camera>();
+    newObject->AddComponent<Movement>();
+    newObject->GetComponent<Transform>()->Translate(glm::vec3(0,0,10));
+    scene1->Add(newObject);
+
+    SceneManager::AddScene(scene1);
+    SceneManager::LoadScene("Scene1");
+
 
     SceneManager::InitializeScene();
 
@@ -133,7 +135,7 @@ int main() {
     while (!glfwWindowShouldClose(window.window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        suzanne.rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
+        monkeyObj->GetComponent<Transform>()->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
 
         SceneManager::UpdateScene();
         SceneManager::RenderScene();
