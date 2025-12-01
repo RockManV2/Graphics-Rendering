@@ -18,6 +18,7 @@ public:
     void Add(GameObject*);
     void Remove(GameObject*);
     void Destroy();
+    std::vector<GameObject*>& GetGameObjects() { return gameObjects; }
 
     void Awake();
     void Start();

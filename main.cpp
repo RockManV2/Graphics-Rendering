@@ -6,14 +6,21 @@
 #include <sstream>
 #include <format>
 
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 #include "../LeyLines/SceneManagement/Scene.h"
 #include "../RawEngine/assimpLoader.h"
 #include "../RawEngine/model.h"
 #include "../RawEngine/texture.h"
+#include "Editor/InspectorWindow.h"
+#include "Editor/SceneWindow.h"
 #include "LeyLines/Core/Camera.h"
 #include "LeyLines/Core/Input.h"
 #include "LeyLines/Core/MeshRenderer.h"
 #include "LeyLines/Core/Window.h"
+#include "LeyLines/Editor/Editor.h"
+#include "LeyLines/Editor/EditorContext.h"
+#include "LeyLines/Editor/HierarchyWindow.h"
 #include "LeyLines/Game/Movement.h"
 #include "LeyLines/SceneManagement/SceneManager.h"
 
@@ -132,20 +139,55 @@ int main() {
     float deltaTime = 0.0f;
     float rotationStrength = 100.0f;
 
+
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    ImGui_ImplGlfw_InitForOpenGL(window.window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
+    ImGui::StyleColorsDark();
+
+    EditorContext context;
+    context.activeScene = scene1;
+
+    Editor editor;
+
+    editor.AddWindow(new HierarchyWindow(context));
+    editor.AddWindow(new InspectorWindow(context));
+    editor.AddWindow(new SceneWindow(context));
+
+
     while (!glfwWindowShouldClose(window.window)) {
+        glfwPollEvents();
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        monkeyObj->GetComponent<Transform>()->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
+        monkeyObj->GetComponent<Transform>()->Rotate(
+            glm::vec3(0.0f, 1.0f, 0.0f),
+            glm::radians(rotationStrength) * deltaTime
+        );
 
         SceneManager::UpdateScene();
         SceneManager::RenderScene();
 
+        editor.Render();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         glfwSwapBuffers(window.window);
-        glfwPollEvents();
+
         finishFrameTime = glfwGetTime();
         deltaTime = static_cast<float>(finishFrameTime - currentTime);
         currentTime = finishFrameTime;
     }
+
 
     glDeleteProgram(modelShaderProgram);
 

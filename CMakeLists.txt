@@ -4,9 +4,13 @@ project(RawEngine)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(imgui imgui/backends)
+include_directories(
+        imgui
+        imgui/backends
+        RawEngine
+        LeyLines
+)
 
-# Add source files for ImGui
 set(IMGUI_SOURCES
         imgui/imgui.cpp
         imgui/imgui_draw.cpp
@@ -15,8 +19,18 @@ set(IMGUI_SOURCES
         imgui/imgui_widgets.cpp
         imgui/backends/imgui_impl_glfw.cpp
         imgui/backends/imgui_impl_opengl3.cpp
+)
+
+set(ENGINE_SOURCES
         RawEngine/texture.cpp
         RawEngine/texture.h
+        RawEngine/assimpLoader.cpp
+        RawEngine/assimpLoader.h
+        RawEngine/mesh.cpp
+        RawEngine/mesh.h
+        RawEngine/vertex.h
+        RawEngine/model.cpp
+        RawEngine/model.h
         LeyLines/Core/GameObject.cpp
         LeyLines/Core/GameObject.h
         LeyLines/SceneManagement/Scene.cpp
@@ -27,8 +41,8 @@ set(IMGUI_SOURCES
         LeyLines/Core/Transform.h
         LeyLines/Core/Shader.cpp
         LeyLines/Core/Shader.h
-        LeyLines/Core/Camera.h
         LeyLines/Core/Camera.cpp
+        LeyLines/Core/Camera.h
         LeyLines/SceneManagement/SceneManager.cpp
         LeyLines/SceneManagement/SceneManager.h
         LeyLines/Game/Movement.cpp
@@ -40,54 +54,67 @@ set(IMGUI_SOURCES
         LeyLines/Core/Input.h
         LeyLines/Core/Window.cpp
         LeyLines/Core/Window.h
+        LeyLines/Editor/EditorWindow.h
+        LeyLines/Editor/HierarchyWindow.cpp
+        LeyLines/Editor/HierarchyWindow.h
+        LeyLines/Editor/Editor.cpp
+        LeyLines/Editor/Editor.h
+        LeyLines/Editor/EditorContext.h
+        LeyLines/Editor/SceneWindow.cpp
+        LeyLines/Editor/SceneWindow.h
+        LeyLines/Editor/InspectorWindow.cpp
+        LeyLines/Editor/InspectorWindow.h
 )
 
-add_executable(RawEngine main.cpp
-        ${IMGUI_SOURCES}
-        RawEngine/assimpLoader.cpp
-        RawEngine/assimpLoader.h
-        RawEngine/mesh.cpp
-        RawEngine/mesh.h
-        RawEngine/vertex.h
-        RawEngine/model.cpp
-        RawEngine/model.h
-)
+add_executable(RawEngine main.cpp ${IMGUI_SOURCES} ${ENGINE_SOURCES})
 
 add_custom_command(
         TARGET RawEngine PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/shaders/
-        ${CMAKE_CURRENT_BINARY_DIR}/shaders/)
+        ${CMAKE_CURRENT_BINARY_DIR}/shaders/
+)
 
 add_custom_command(
         TARGET RawEngine PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/models/
-        ${CMAKE_CURRENT_BINARY_DIR}/models/)
+        ${CMAKE_CURRENT_BINARY_DIR}/models/
+)
 
 add_custom_command(
         TARGET RawEngine PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/textures/
-        ${CMAKE_CURRENT_BINARY_DIR}/textures/)
+        ${CMAKE_CURRENT_BINARY_DIR}/textures/
+)
 
 add_custom_target(copy_shaders ALL
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/shaders
         ${CMAKE_CURRENT_BINARY_DIR}/shaders
-        DEPENDS ${SHADER_FILES}
-        COMMENT "Copying shaders..."
 )
 
 add_dependencies(RawEngine copy_shaders)
 
 find_package(glad CONFIG REQUIRED)
-target_link_libraries(RawEngine PRIVATE glad::glad)
 find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(RawEngine PRIVATE glfw)
 find_package(glm CONFIG REQUIRED)
-target_link_libraries(RawEngine PRIVATE glm::glm)
 find_package(assimp CONFIG REQUIRED)
-target_link_libraries(RawEngine PRIVATE assimp::assimp)
 find_package(Stb REQUIRED)
-target_include_directories(RawEngine PRIVATE ${Stb_INCLUDE_DIR})
+find_package(X11 REQUIRED)
+
+target_link_libraries(RawEngine PRIVATE
+        glad::glad
+        glfw
+        glm::glm
+        assimp::assimp
+        ${Stb_INCLUDE_DIR}
+        ${X11_LIBRARIES}
+        Xrandr
+        Xi
+        Xxf86vm
+        Xcursor
+        pthread
+        dl
+)

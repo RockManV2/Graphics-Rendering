@@ -9,11 +9,9 @@
 #include "Transform.h"
 
 class GameObject{
-private:
-    std::vector<Component*> components;
-
 public:
     std::string name;
+
     Transform* transform;
 
     GameObject(std::string name);
@@ -52,6 +50,9 @@ public:
     virtual void OnEnable();
     virtual void OnDisable();
     virtual void Update();
+
+private:
+    std::vector<Component*> components;
 };
 
 
