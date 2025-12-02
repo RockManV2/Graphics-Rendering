@@ -1,6 +1,6 @@
 #include "mesh.h"
 
-namespace core {
+
     Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) : vertices(vertices), indices(indices) {
         setupBuffers();
     }
@@ -66,4 +66,3 @@ namespace core {
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, 0);
     }
-}

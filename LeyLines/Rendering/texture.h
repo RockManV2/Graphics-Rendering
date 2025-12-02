@@ -3,16 +3,13 @@
 #include <glad/glad.h>
 #include <string>
 
-namespace core {
+class Texture {
+private:
+    GLuint id;
 
-    class Texture {
-    private:
-        GLuint id;
+public:
+    Texture(const std::string& path);
 
-    public:
-        Texture(const std::string& path);
+    GLuint getId();
+};
 
-        GLuint getId();
-    };
-
-}

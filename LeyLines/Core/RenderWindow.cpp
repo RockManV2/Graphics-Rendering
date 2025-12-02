@@ -1,13 +1,19 @@
 
 #include <glad/glad.h>
-#include "Window.h"
+#include "RenderWindow.h"
 #include <stdexcept>
 
 
-Window::Window(int width, int height, std::string name) {
+RenderWindow::RenderWindow(std::string name) {
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialize GLFW");
     }
+
+    GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+
+    width = mode->width;
+    height = mode->height;
 
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -17,16 +23,16 @@ Window::Window(int width, int height, std::string name) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    window = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
-    if (!window) {
+    glWindow = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
+    if (!glWindow) {
         glfwTerminate();
         throw std::runtime_error("Failed to create GLFW window");
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(glWindow);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(glWindow);
         glfwTerminate();
         throw std::runtime_error("Failed to initialize GLAD");
     }
@@ -39,18 +45,18 @@ Window::Window(int width, int height, std::string name) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-Window::~Window() {
-    if (window) {
-        glfwDestroyWindow(window);
+RenderWindow::~RenderWindow() {
+    if (glWindow) {
+        glfwDestroyWindow(glWindow);
     }
     glfwTerminate();
 }
 
-void Window::SetFrameBufferCallback(std::function<void(GLFWwindow *, int, int)> callback) {
-    glfwSetFramebufferSizeCallback(window, [](GLFWwindow* win, int w, int h) {
+void RenderWindow::SetFrameBufferCallback(std::function<void(GLFWwindow *, int, int)> callback) {
+    glfwSetFramebufferSizeCallback(glWindow, [](GLFWwindow* win, int w, int h) {
         auto func = reinterpret_cast<std::function<void(GLFWwindow*, int, int)>*>(glfwGetWindowUserPointer(win));
         if (func) (*func)(win, w, h);
     });
-    glfwSetWindowUserPointer(window, &callback);
+    glfwSetWindowUserPointer(glWindow, &callback);
 }
 

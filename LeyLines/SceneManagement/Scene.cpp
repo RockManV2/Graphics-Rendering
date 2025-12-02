@@ -46,9 +46,9 @@ void Scene::OnDisable() {
     }
 }
 
-void Scene::Update() {
+void Scene::Update(float deltaTime) {
     for (auto & gameObject : gameObjects) {
-        gameObject->Update();
+        gameObject->Update(deltaTime);
     }
 }
 

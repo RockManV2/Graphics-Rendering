@@ -8,7 +8,7 @@
 class Movement : public Component {
 
 public:
-    void Update() override;
+    void Update(float deltaTime) override;
 };
 
 

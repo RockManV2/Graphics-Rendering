@@ -6,15 +6,14 @@
 #include "mesh.h"
 
 
-namespace core {
 
-    class AssimpLoader {
-    public:
-        static Model loadModel(const std::string& path);
-    private:
-        static void processNode(aiNode* node, const aiScene* scene, std::vector<Mesh>& meshes);
-        static Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-    };
 
-} // core
+class AssimpLoader {
+public:
+    static Model loadModel(const std::string& path);
+private:
+    static void processNode(aiNode* node, const aiScene* scene, std::vector<Mesh>& meshes);
+    static Mesh processMesh(aiMesh *mesh, const aiScene *scene);
+};
+
 

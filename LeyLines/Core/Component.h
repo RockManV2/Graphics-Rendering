@@ -18,7 +18,7 @@ public:
     virtual void Start();
     virtual void OnEnable();
     virtual void OnDisable();
-    virtual void Update();
+    virtual void Update(float deltaTime);
 };
 
 

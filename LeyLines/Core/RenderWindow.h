@@ -6,13 +6,13 @@
 #include <functional>
 #include <string>
 
-class Window {
+class RenderWindow {
 public:
-    GLFWwindow* window;
+    GLFWwindow* glWindow;
     int width, height;
 
-    Window(int width, int height, std::string name);
-    ~Window();
+    RenderWindow(std::string name);
+    ~RenderWindow();
 
     void SetFrameBufferCallback(std::function<void(GLFWwindow*, int, int)> callback);
 };

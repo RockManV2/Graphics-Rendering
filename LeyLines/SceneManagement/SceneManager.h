@@ -12,17 +12,16 @@
 
 class SceneManager {
 public:
-    static std::unordered_map<std::string, Scene*> scenes;
-
     static void LoadScene(std::string name);
     static Scene* GetActiveScene();
     static void InitializeScene();
-    static void UpdateScene();
+    static void UpdateScene(float deltaTime);
     static void RenderScene();
     static void AddScene(Scene* newScene);
 
 private:
     static Scene* activeScene;
+    static std::unordered_map<std::string, Scene*> scenes;
 };
 
 

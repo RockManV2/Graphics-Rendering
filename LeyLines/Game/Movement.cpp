@@ -8,7 +8,7 @@
 #include "../Core/Input.h"
 
 
-void Movement::Update() {
+void Movement::Update(float deltaTime) {
 
     if (Input::GetKeyDown(GLFW_KEY_W)) {
         Camera::GetActive()->transform->Translate(glm::vec3(0.0f, 0.0f, -0.1f));

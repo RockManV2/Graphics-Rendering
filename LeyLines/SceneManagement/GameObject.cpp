@@ -38,8 +38,8 @@ void GameObject::OnDisable() {
     }
 }
 
-void GameObject::Update() {
+void GameObject::Update(float deltaTime) {
     for (auto & component : components) {
-        component->Update();
+        component->Update(deltaTime);
     }
 }

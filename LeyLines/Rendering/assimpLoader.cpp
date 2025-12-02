@@ -5,7 +5,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-namespace core {
+
     Model AssimpLoader::loadModel(const std::string& path) {
         Assimp::Importer import;
         const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
@@ -58,4 +58,3 @@ namespace core {
         }
         return Mesh(vertices, indices);
     }
-}

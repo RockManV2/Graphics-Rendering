@@ -52,8 +52,8 @@ set(ENGINE_SOURCES
         LeyLines/Rendering/MeshRenderer.h
         LeyLines/Core/Input.cpp
         LeyLines/Core/Input.h
-        LeyLines/Core/Window.cpp
-        LeyLines/Core/Window.h
+        LeyLines/Core/RenderWindow.cpp
+        LeyLines/Core/RenderWindow.h
         LeyLines/Editor/EditorWindow.h
         LeyLines/Editor/HierarchyWindow.cpp
         LeyLines/Editor/HierarchyWindow.h
@@ -64,6 +64,12 @@ set(ENGINE_SOURCES
         LeyLines/Editor/SceneWindow.h
         LeyLines/Editor/InspectorWindow.cpp
         LeyLines/Editor/InspectorWindow.h
+        LeyLines/Core/Application.cpp
+        LeyLines/Core/Application.h
+        LeyLines/Editor/ProjectWindow.cpp
+        LeyLines/Editor/ProjectWindow.h
+        LeyLines/Game/MonkeyRotator.cpp
+        LeyLines/Game/MonkeyRotator.h
 )
 
 add_executable(RawEngine main.cpp ${IMGUI_SOURCES} ${ENGINE_SOURCES})

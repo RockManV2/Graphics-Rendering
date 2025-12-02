@@ -27,9 +27,8 @@ void SceneManager::InitializeScene() {
     activeScene->OnEnable();
 }
 
-void SceneManager::UpdateScene() {
-    activeScene->Update();
-    activeScene->Render();
+void SceneManager::UpdateScene(float deltaTime) {
+    activeScene->Update(deltaTime);
 }
 
 void SceneManager::RenderScene() {

@@ -8,7 +8,7 @@
 
 class MeshRenderer : public Component, public IRenderable {
 public:
-    core::Model* model = nullptr;
+    Model* model = nullptr;
     GLuint shaderId = 0;
     GLuint textureId = 0;
 

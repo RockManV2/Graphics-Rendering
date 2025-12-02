@@ -24,7 +24,7 @@ public:
     void Start();
     void OnEnable();
     void OnDisable();
-    void Update();
+    void Update(float deltaTime);
     void Render();
     void RegisterRenderable(IRenderable*);
     void CheckCollisions();
