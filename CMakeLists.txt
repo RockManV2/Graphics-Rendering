@@ -22,34 +22,34 @@ set(IMGUI_SOURCES
 )
 
 set(ENGINE_SOURCES
-        RawEngine/texture.cpp
-        RawEngine/texture.h
-        RawEngine/assimpLoader.cpp
-        RawEngine/assimpLoader.h
-        RawEngine/mesh.cpp
-        RawEngine/mesh.h
-        RawEngine/vertex.h
-        RawEngine/model.cpp
-        RawEngine/model.h
-        LeyLines/Core/GameObject.cpp
-        LeyLines/Core/GameObject.h
+        LeyLines/Rendering/texture.cpp
+        LeyLines/Rendering/texture.h
+        LeyLines/Rendering/assimpLoader.cpp
+        LeyLines/Rendering/assimpLoader.h
+        LeyLines/Rendering/mesh.cpp
+        LeyLines/Rendering/mesh.h
+        LeyLines/Rendering/vertex.h
+        LeyLines/Rendering/model.cpp
+        LeyLines/Rendering/model.h
+        LeyLines/SceneManagement/GameObject.cpp
+        LeyLines/SceneManagement/GameObject.h
         LeyLines/SceneManagement/Scene.cpp
         LeyLines/SceneManagement/Scene.h
         LeyLines/Core/Component.cpp
         LeyLines/Core/Component.h
         LeyLines/Core/Transform.cpp
         LeyLines/Core/Transform.h
-        LeyLines/Core/Shader.cpp
-        LeyLines/Core/Shader.h
+        LeyLines/Rendering/Shader.cpp
+        LeyLines/Rendering/Shader.h
         LeyLines/Core/Camera.cpp
         LeyLines/Core/Camera.h
         LeyLines/SceneManagement/SceneManager.cpp
         LeyLines/SceneManagement/SceneManager.h
         LeyLines/Game/Movement.cpp
         LeyLines/Game/Movement.h
-        LeyLines/Core/IRenderable.h
-        LeyLines/Core/MeshRenderer.cpp
-        LeyLines/Core/MeshRenderer.h
+        LeyLines/Rendering/IRenderable.h
+        LeyLines/Rendering/MeshRenderer.cpp
+        LeyLines/Rendering/MeshRenderer.h
         LeyLines/Core/Input.cpp
         LeyLines/Core/Input.h
         LeyLines/Core/Window.cpp

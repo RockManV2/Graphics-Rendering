@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "Component.h"
-#include "Transform.h"
+#include "../Core/Component.h"
+#include "../Core/Transform.h"
 
 class GameObject{
 public:

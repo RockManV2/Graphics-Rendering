@@ -2,8 +2,8 @@
 #ifndef RAWENGINE_MESHRENDERER_H
 #define RAWENGINE_MESHRENDERER_H
 
-#include "../../RawEngine/model.h"
-#include "Component.h"
+#include "model.h"
+#include "../Core/Component.h"
 #include "IRenderable.h"
 
 class MeshRenderer : public Component, public IRenderable {

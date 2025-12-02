@@ -4,8 +4,8 @@
 
 #include <string>
 #include <vector>
-#include "../Core/GameObject.h"
-#include "../Core/IRenderable.h"
+#include "GameObject.h"
+#include "../Rendering/IRenderable.h"
 
 class Scene {
 public:

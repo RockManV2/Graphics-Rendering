@@ -1,5 +1,5 @@
-#include "../RawEngine/model.h"
-#include "../RawEngine/mesh.h"
+#include "model.h"
+#include "mesh.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace core {

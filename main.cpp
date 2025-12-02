@@ -9,14 +9,14 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "../LeyLines/SceneManagement/Scene.h"
-#include "../RawEngine/assimpLoader.h"
-#include "../RawEngine/model.h"
-#include "../RawEngine/texture.h"
+#include "LeyLines/Rendering/assimpLoader.h"
+#include "LeyLines/Rendering/model.h"
+#include "LeyLines/Rendering/texture.h"
 #include "Editor/InspectorWindow.h"
 #include "Editor/SceneWindow.h"
 #include "LeyLines/Core/Camera.h"
 #include "LeyLines/Core/Input.h"
-#include "LeyLines/Core/MeshRenderer.h"
+#include "LeyLines/Rendering/MeshRenderer.h"
 #include "LeyLines/Core/Window.h"
 #include "LeyLines/Editor/Editor.h"
 #include "LeyLines/Editor/EditorContext.h"
@@ -156,7 +156,8 @@ int main() {
 
     editor.AddWindow(new HierarchyWindow(context));
     editor.AddWindow(new InspectorWindow(context));
-    editor.AddWindow(new SceneWindow(context));
+    auto sceneWindow = new SceneWindow(context, 400, 250);
+    editor.AddWindow(sceneWindow);
 
 
     while (!glfwWindowShouldClose(window.window)) {
@@ -166,15 +167,18 @@ int main() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         monkeyObj->GetComponent<Transform>()->Rotate(
             glm::vec3(0.0f, 1.0f, 0.0f),
             glm::radians(rotationStrength) * deltaTime
         );
 
         SceneManager::UpdateScene();
+        sceneWindow->RenderToFramebuffer();
         SceneManager::RenderScene();
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, g_width, g_height);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         editor.Render();
 

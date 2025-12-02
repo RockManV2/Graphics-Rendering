@@ -1,6 +1,6 @@
 #include "assimpLoader.h"
-#include "../RawEngine/model.h"
-#include "../RawEngine/mesh.h"
+#include "model.h"
+#include "mesh.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

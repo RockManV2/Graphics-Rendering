@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../RawEngine/mesh.h"
+#include "mesh.h"
 #include <glm/ext/matrix_float4x4.hpp>
 
 namespace core {

@@ -1,5 +1,5 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "../RawEngine/texture.h"
+#include "texture.h"
 #include <stb_image.h>
 
 namespace core {

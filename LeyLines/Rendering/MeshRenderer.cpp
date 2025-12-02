@@ -1,6 +1,6 @@
 
 #include "MeshRenderer.h"
-#include "Camera.h"
+#include "../Core/Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../SceneManagement/SceneManager.h"

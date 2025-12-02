@@ -2,8 +2,8 @@
 
 #include <string>
 #include <assimp/scene.h>
-#include "../RawEngine/model.h"
-#include "../RawEngine/mesh.h"
+#include "model.h"
+#include "mesh.h"
 
 
 namespace core {

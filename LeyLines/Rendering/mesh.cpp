@@ -1,4 +1,4 @@
-#include "../RawEngine/mesh.h"
+#include "mesh.h"
 
 namespace core {
     Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) : vertices(vertices), indices(indices) {
