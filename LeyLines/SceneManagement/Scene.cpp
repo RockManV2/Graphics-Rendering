@@ -62,3 +62,7 @@ void Scene::RegisterRenderable(IRenderable* renderable) {
     renderables.push_back(renderable);
 }
 
+void Scene::RegisterLight(Light* light) {
+    lights.push_back(light);
+}
+

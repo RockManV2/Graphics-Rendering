@@ -70,6 +70,7 @@ set(ENGINE_SOURCES
         LeyLines/Editor/ProjectWindow.h
         LeyLines/Game/MonkeyRotator.cpp
         LeyLines/Game/MonkeyRotator.h
+        LeyLines/Rendering/Light.h
 )
 
 add_executable(RawEngine main.cpp ${IMGUI_SOURCES} ${ENGINE_SOURCES})

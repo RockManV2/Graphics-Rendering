@@ -23,6 +23,8 @@
 #include "Game/MonkeyRotator.h"
 #include "Rendering/MeshRenderer.h"
 #include "Game/Movement.h"
+#include "Rendering/Light.h"
+
 int g_width = 800;
 int g_height = 600;
 
@@ -78,12 +80,14 @@ void Temp() {
     glDeleteShader(textureShader);
 
 
+
+
     // Refactor to SceneManager
 
     Mesh* quad = new Mesh(Mesh::generateQuad());
     Model* quadModel = new Model({*quad});
     Model* suzanne = new Model(AssimpLoader::loadModel("models/nonormalmonkey.obj"));
-    Texture* cmgtGatoTexture = new Texture("textures/CMGaTo_crop.png");
+    Texture cmgtGatoTexture ("textures/CMGaTo_crop.png");
 
 
     Scene* scene1 = new Scene("Scene1");
@@ -101,7 +105,7 @@ void Temp() {
     auto* quadRenderer = quadObj->AddComponent<MeshRenderer>();
     quadRenderer->model = quadModel;
     quadRenderer->shaderId = textureShaderProgram;
-    quadRenderer->textureId = cmgtGatoTexture->getId();
+    quadRenderer->textureId = cmgtGatoTexture.getId();
     quadObj->GetComponent<Transform>()->Translate(glm::vec3(0,0,-2.5));
     quadObj->GetComponent<Transform>()->Scale(glm::vec3(5, 5, 1));
     scene1->Add(quadObj);
@@ -112,6 +116,12 @@ void Temp() {
     cameraObj->AddComponent<Movement>();
     cameraObj->GetComponent<Transform>()->Translate(glm::vec3(0,0,10));
     scene1->Add(cameraObj);
+
+    GameObject* lights = new GameObject("Lights");
+    lights->AddComponent<Light>()->color = glm::vec4(0,1,0,1);
+    lights->AddComponent<Light>()->color = glm::vec4( 1,0, 0,1);
+    lights->transform->Translate(glm::vec3(0,0,5));
+    scene1->Add(lights);
 
     // Add to SceneManager
     SceneManager::AddScene(scene1);

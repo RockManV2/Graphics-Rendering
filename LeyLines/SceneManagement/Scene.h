@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "../Rendering/IRenderable.h"
 
+class Light;
+
 class Scene {
 public:
     Scene(std::string name);
@@ -19,6 +21,7 @@ public:
     void Remove(GameObject*);
     void Destroy();
     std::vector<GameObject*>& GetGameObjects() { return gameObjects; }
+    std::vector<Light*>& GetLights() { return lights; }
 
     void Awake();
     void Start();
@@ -27,11 +30,13 @@ public:
     void Update(float deltaTime);
     void Render();
     void RegisterRenderable(IRenderable*);
+    void RegisterLight(Light*);
     void CheckCollisions();
 
 private:
     std::vector<GameObject*> gameObjects;
     std::vector<IRenderable*> renderables;
+    std::vector<Light*> lights;
 };
 
 

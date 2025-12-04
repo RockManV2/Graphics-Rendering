@@ -1,8 +1,12 @@
 
 #include "MeshRenderer.h"
+
+#include <format>
+
 #include "../Core/Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Light.h"
 #include "../SceneManagement/SceneManager.h"
 
 void MeshRenderer::Start() {
@@ -33,6 +37,22 @@ void MeshRenderer::Render() {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textureId);
         glUniform1i(textureLocation, 0);
+    }
+
+    std::vector<Light*> lights = SceneManager::GetActiveScene()->GetLights();
+    auto sizeUniformLocation = glGetUniformLocation(shaderId,"size");
+    glUniform1i(sizeUniformLocation, lights.size());
+
+    for (int i = 0; i < lights.size(); ++i) {
+        Light* light = lights[i];
+
+        auto positionUniformLocation = glGetUniformLocation(shaderId,std::format("lights[{}].position",i).c_str());
+        auto lightPos = light->transform->GetPosition();
+        glUniform3f(positionUniformLocation, lightPos.x, lightPos.y, lightPos.z);
+
+        auto colorUniformLocation = glGetUniformLocation(shaderId,std::format("lights[{}].color",i).c_str());
+        auto lightColor = light->color;
+        glUniform3f(colorUniformLocation, lightColor.x, lightColor.y, lightColor.z);
     }
 
     model->render();

@@ -12,6 +12,9 @@
 
 class SceneManager {
 public:
+    SceneManager() = default;
+    ~SceneManager();
+
     static void LoadScene(std::string name);
     static Scene* GetActiveScene();
     static void InitializeScene();

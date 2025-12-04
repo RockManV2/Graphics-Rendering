@@ -7,6 +7,12 @@
 std::unordered_map<std::string, Scene*> SceneManager::scenes{};
 Scene* SceneManager::activeScene = nullptr;
 
+SceneManager::~SceneManager() {
+    for (auto it = scenes.begin(); it != scenes.end(); it++) {
+        delete it->second;
+    }
+}
+
 void SceneManager::LoadScene(std::string name) {
     if (scenes[name] != nullptr) {
         activeScene = scenes[name];
