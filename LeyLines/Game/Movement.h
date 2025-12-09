@@ -6,8 +6,9 @@
 #include "../Core/Component.h"
 
 class Movement : public Component {
-
 public:
+    const char* GetName() override { return "Movement"; }
+
     void Update(float deltaTime) override;
 };
 

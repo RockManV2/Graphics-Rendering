@@ -5,12 +5,15 @@
 #include <glm/glm.hpp>
 
 #include "Component.h"
+#include "Editor/IInspectable.h"
 
 class Transform : public Component {
 public:
     Transform() {
         modelMatrix = glm::mat4(1.0f);
     }
+
+    const char* GetName() override { return "Transform"; }
 
     glm::vec3 GetPosition();
     glm::vec3 GetRotation();

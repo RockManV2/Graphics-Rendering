@@ -9,10 +9,10 @@
 
 struct EditorContext
 {
-    glm::uint32_t selectedEntity = 0;
+    GameObject* selectedEntity = nullptr;
     Scene* activeScene = nullptr;
 };
 
 
 
-#endif //RAWENGINE_EDITORCONTEXT_H
+#endif //RAWENGINEwin_EDITORCONTEXT_H

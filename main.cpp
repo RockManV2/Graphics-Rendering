@@ -117,11 +117,15 @@ void Temp() {
     cameraObj->GetComponent<Transform>()->Translate(glm::vec3(0,0,10));
     scene1->Add(cameraObj);
 
-    GameObject* lights = new GameObject("Lights");
-    lights->AddComponent<Light>()->color = glm::vec4(0,1,0,1);
-    lights->AddComponent<Light>()->color = glm::vec4( 1,0, 0,1);
-    lights->transform->Translate(glm::vec3(0,0,5));
-    scene1->Add(lights);
+    GameObject* light1 = new GameObject("Lights");
+    light1->AddComponent<Light>()->color = glm::vec4( 1,0, 0,1);
+    light1->transform->Translate(glm::vec3(0,0,5));
+    scene1->Add(light1);
+
+    GameObject* light2 = new GameObject("Lights");
+    light2->AddComponent<Light>()->color = glm::vec4(0,1,0,1);
+    light2->transform->Translate(glm::vec3(0,0,5));
+    scene1->Add(light2);
 
     // Add to SceneManager
     SceneManager::AddScene(scene1);

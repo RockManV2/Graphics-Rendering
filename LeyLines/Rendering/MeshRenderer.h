@@ -8,6 +8,8 @@
 
 class MeshRenderer : public Component, public IRenderable {
 public:
+    const char* GetName() override { return "Mesh Renderer"; }
+
     Model* model = nullptr;
     GLuint shaderId = 0;
     GLuint textureId = 0;

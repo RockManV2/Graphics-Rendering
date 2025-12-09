@@ -5,6 +5,7 @@
 #include "HierarchyWindow.h"
 
 #include "EditorContext.h"
+#include <format>
 
 void HierarchyWindow::OnImGuiRender() {
     if (!editorContext.activeScene) return;
@@ -14,11 +15,9 @@ void HierarchyWindow::OnImGuiRender() {
     for (size_t i = 0; i < sceneObjects.size(); i++) {
         if (!sceneObjects[i]) continue;
 
-        const char* name = sceneObjects[i]->name.c_str();
-        if (!name) continue;
+        std::string name = sceneObjects[i]->name;
 
-        bool selected = (editorContext.selectedEntity == i);
-        if (ImGui::Selectable(name, selected))
-            editorContext.selectedEntity = static_cast<uint32_t>(i);
+        if (ImGui::Selectable((name + "##" + std::to_string(i)).c_str()))
+            editorContext.selectedEntity = sceneObjects[i];
     }
 }

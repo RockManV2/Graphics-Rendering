@@ -11,6 +11,9 @@
 
 class Camera : public Component {
 public:
+    const char* GetName() override { return "Camera"; }
+
+
     static Camera* GetActive();
 
     glm::mat4 GetViewMatrix();

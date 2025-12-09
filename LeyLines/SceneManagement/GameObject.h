@@ -21,7 +21,7 @@ public:
     GameObject Find(std::string);
     GameObject Instantiate();
     std::vector<GameObject> FindObjectsWithTag(std::string); // copy???
-
+    std::vector<Component*> GetAllComponents() { return components; }
     template <typename T, typename... Args>
     T* AddComponent(Args&&... args) {
         T* newComponent = new T(std::forward<Args>(args)...);

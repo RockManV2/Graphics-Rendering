@@ -9,6 +9,8 @@ class GameObject;
 class Component {
 
 public:
+    virtual const char* GetName() = 0;
+
     GameObject* gameObject;
     Transform* transform;
 

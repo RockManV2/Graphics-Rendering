@@ -7,16 +7,23 @@
 
 #include "Core/Component.h"
 #include "SceneManagement/SceneManager.h"
+#include <imgui.h>
 
-
-class Light : public Component {
+class Light : public Component, public IInspectable {
 public:
      ~Light() = default;
+
+    const char* GetName() override { return "Light"; }
+
     void Awake() {
         SceneManager::GetActiveScene()->RegisterLight(this);
     }
 
     glm::vec4 color = glm::vec4(0, 0,0,1);
+
+    void DrawInspector() override {
+        ImGui::ColorEdit3("Color", (float*)&color);
+    }
 };
 
 

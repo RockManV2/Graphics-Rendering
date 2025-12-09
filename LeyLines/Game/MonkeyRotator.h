@@ -8,7 +8,9 @@
 
 
 class MonkeyRotator : public Component {
-    public:
+public:
+    const char* GetName() override { return "MonkeyRotator"; }
+
     void Update(float deltaTime) override;
 };
 
