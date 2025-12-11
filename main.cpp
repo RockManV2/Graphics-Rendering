@@ -107,7 +107,7 @@ void Temp() {
     quadRenderer->shaderId = textureShaderProgram;
     quadRenderer->textureId = cmgtGatoTexture.getId();
     quadObj->GetComponent<Transform>()->Translate(glm::vec3(0,0,-2.5));
-    quadObj->GetComponent<Transform>()->Scale(glm::vec3(5, 5, 1));
+    quadObj->GetComponent<Transform>()->scale = glm::vec3(5, 5, 1);
     scene1->Add(quadObj);
 
     // Camera

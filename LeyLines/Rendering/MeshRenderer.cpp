@@ -47,7 +47,7 @@ void MeshRenderer::Render() {
         Light* light = lights[i];
 
         auto positionUniformLocation = glGetUniformLocation(shaderId,std::format("lights[{}].position",i).c_str());
-        auto lightPos = light->transform->GetPosition();
+        auto lightPos = light->transform->position;
         glUniform3f(positionUniformLocation, lightPos.x, lightPos.y, lightPos.z);
 
         auto colorUniformLocation = glGetUniformLocation(shaderId,std::format("lights[{}].color",i).c_str());

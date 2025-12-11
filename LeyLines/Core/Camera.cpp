@@ -18,7 +18,7 @@ Camera* Camera::GetActive() {
 
 glm::mat4 Camera::GetViewMatrix() {
     glm::mat4 cameraMatrix = glm::mat4(1.0f);
-    cameraMatrix = glm::translate(cameraMatrix, transform->GetPosition());
+    cameraMatrix = glm::translate(cameraMatrix, transform->position);
     return glm::inverse(cameraMatrix);
 
 }
@@ -33,5 +33,5 @@ void Camera::Awake() {
     if (activeCam == nullptr)
         activeCam = this;
 
-    transform->GetPosition() = glm::vec3(0.0f, 0.0f, 10.0f);
+    transform->position = glm::vec3(0.0f, 0.0f, 10.0f);
 }
