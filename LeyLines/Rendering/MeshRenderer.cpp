@@ -53,6 +53,14 @@ void MeshRenderer::Render() {
         auto colorUniformLocation = glGetUniformLocation(shaderId,std::format("lights[{}].color",i).c_str());
         auto lightColor = light->color;
         glUniform3f(colorUniformLocation, lightColor.x, lightColor.y, lightColor.z);
+
+        auto directionUniformLocation = glGetUniformLocation(shaderId,std::format("lights[{}].direction",i).c_str());
+        auto lightDirection = light->transform->rotation;
+        glUniform3f(directionUniformLocation, lightDirection.x, lightDirection.y, lightDirection.z);
+
+        auto modelMartixUniformLocation = glGetUniformLocation(shaderId,std::format("modelMatrix",i).c_str());
+        auto modelMartix = transform->GetModelMatrix();
+        glUniformMatrix4fv(modelMartixUniformLocation,1, GL_FALSE, glm::value_ptr(modelMartix));
     }
 
     model->render();

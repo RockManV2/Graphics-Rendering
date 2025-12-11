@@ -4,11 +4,16 @@ in vec3 fPos;
 in vec3 fNor;
 in vec2 uv;
 
+in vec3 fWorldNor;
+in vec3 fWorldPos;
+
+
 out vec4 fragColor;
 
 struct Light {
     vec3 color;
     vec3 position;
+    vec3 direction;
 };
 
 uniform int size;
@@ -23,12 +28,19 @@ vec3 ambient()
     return ambientIntensity * ambientLightColor * diffuseColor;
 };
 
+vec3 diffuse(Light light)
+{
+     return max(dot(normalize(fWorldNor), normalize(light.position - fPos)), 0.0) * light.color * diffuseColor;
+};
+
+
+
 void main()
 {
     vec3 result = vec3(0,0,0);
 
     for (int i = 0; i < size; i++) {
-        result += lights[i].color;
+        result += diffuse(lights[i]);
     }
 
     result = result + ambient();
