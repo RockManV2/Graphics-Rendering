@@ -7,7 +7,7 @@
 #include "EditorWindow.h"
 
 #include "EditorContext.h"
-#include <glad/glad.h>
+#include <glad/gl.h>
 
 class SceneWindow : public EditorWindow {
 public:

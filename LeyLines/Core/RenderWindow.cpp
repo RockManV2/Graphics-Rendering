@@ -1,5 +1,5 @@
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include "RenderWindow.h"
 #include <stdexcept>
 
@@ -31,7 +31,7 @@ RenderWindow::RenderWindow(std::string name) {
 
     glfwMakeContextCurrent(glWindow);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGL(glfwGetProcAddress)) {
         glfwDestroyWindow(glWindow);
         glfwTerminate();
         throw std::runtime_error("Failed to initialize GLAD");

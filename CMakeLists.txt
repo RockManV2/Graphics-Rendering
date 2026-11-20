@@ -72,6 +72,7 @@ set(ENGINE_SOURCES
         LeyLines/Game/MonkeyRotator.h
         LeyLines/Rendering/Light.h
         LeyLines/Editor/IInspectable.h
+        main.cpp
 )
 
 add_executable(RawEngine main.cpp ${IMGUI_SOURCES} ${ENGINE_SOURCES})
@@ -105,19 +106,26 @@ add_custom_target(copy_shaders ALL
 
 add_dependencies(RawEngine copy_shaders)
 
-find_package(glad CONFIG REQUIRED)
+include(FetchContent)
+FetchContent_Declare(
+        glad
+        GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+        GIT_TAG        v2.0.8
+        SOURCE_SUBDIR  cmake
+)
+FetchContent_MakeAvailable(glad)
+
+glad_add_library(glad_gl_core_46 STATIC REPRODUCIBLE LOADER API gl:core=4.6)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
-find_package(Stb REQUIRED)
 find_package(X11 REQUIRED)
 
 target_link_libraries(RawEngine PRIVATE
-        glad::glad
+        glad_gl_core_46
         glfw
         glm::glm
         assimp::assimp
-        ${Stb_INCLUDE_DIR}
         ${X11_LIBRARIES}
         Xrandr
         Xi
